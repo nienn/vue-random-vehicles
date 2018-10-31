@@ -15,18 +15,18 @@ This install instructions are only needed for the infrastructure creation.
  * Configure and use SCSS (using npm);
  * Configure and use Typescript Project (using npm);
  * Import Lodash on project and use lodash methods (using npm);
- * Create function/method to populate the array with 50 items;
- * Save and verify if already exists the collection of vehicles in Session Storage;
+ * Create function/method to populate an array with 50 items;
+ * When entering in the application a validation must be done to check if the array is in the Session Storage. If don't, you should add it to Session Storage;
  * Create array with keys:
 	* id;
 	* driver;
-	*  licensePlate;
+	* licensePlate;
 	* dateNextInspection;
 	* hasInsurance;
-	* year
+	* year;
 	* manufacturer;
 	* acquisitionDate;
-	* odometer.
+	* odometer;
 * Render vehicle table;
 * Create vehicle details;
 * The vehicle list has the filters:
@@ -38,5 +38,3 @@ This install instructions are only needed for the infrastructure creation.
 	* Odometer > 300.000km;
 
 * Estimated time: **120 minutes**
-
-	
