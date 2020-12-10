@@ -8,7 +8,7 @@ This is an empty project with VueCLI
 *  `npm run serve //serve with hot reload at localhost:8080`
 
 
-## Create bitbucket repository with nameDeveloper_Frotcom and share with dereckson.santana@frotcom.com;
+Create bitbucket repository with nameDeveloper_Frotcom and share with dereckson.santana@frotcom.com;
 
 - Configure and use SCSS;
 - Configure and use Typescript (Class, Enums, Types);
