@@ -23,7 +23,7 @@
 
     <div class="row">
       <div class="row-title">Odometer</div>
-      <div>{{vehicle.odometer}}km</div>
+      <div>{{vehicle.odometer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}}km</div>
     </div>
 
     <div class="row">
