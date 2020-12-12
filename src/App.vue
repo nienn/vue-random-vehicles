@@ -61,34 +61,6 @@ for  (let i = 0; i < 50; i++){
 }
 // end mock data ---------------------
 
-/*let filterProps = {
-  hasInsurance: 'all',
-  driverName: true,
-  odometer: 0
-};
-let vehiclesCount = 0;
-
-let filteredVehiclesArr = vehiclesArr.filter(function(item) {
-  for (var key in filterProps) {
-    if(
-        key == 'hasInsurance' && filterProps[key] != 'all' || 
-        key == 'driverName' && !filterProps[key]
-      ){
-      if (item[key] === undefined || item[key] != filterProps[key]) {
-        return false;
-      }
-    }
-    if(key == 'odometer'){
-      if (item[key] <= filterProps[key] * 1000) {
-        return false;
-      }
-    }
-  }
-  vehiclesCount++;
-  return true;
-});
-console.log('Currently showing ' + vehiclesCount + ' of 50 vehicles.');*/
-
 export default Vue.extend({
   name: 'App',
   components: {

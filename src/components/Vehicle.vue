@@ -3,7 +3,7 @@
 
     <div class="row">
       <h3 v-if="vehicle.driverName">{{vehicle.driverName}}</h3>
-      <h3 v-else-if="!vehicle.driverName"><i class="red">&mdash; No Vehicle &mdash;</i></h3>
+      <h3 v-else-if="!vehicle.driverName"><i class="red">&mdash; No Driver &mdash;</i></h3>
     </div>
 
     <div class="row">
