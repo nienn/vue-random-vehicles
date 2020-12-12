@@ -1,42 +1,43 @@
 <template>
-  <div class="driver">
+  <div class="vehicle">
 
     <div class="row">
-      <h3>{{driver.driverName}}</h3>
+      <h3 v-if="vehicle.driverName">{{vehicle.driverName}}</h3>
+      <h3 v-else-if="!vehicle.driverName"><i class="red">&mdash; No Vehicle &mdash;</i></h3>
     </div>
 
     <div class="row">
       <div class="row-title">Licence Plate</div>
-      <div>{{driver.licensePlate}}</div>
+      <div>{{vehicle.licensePlate}}</div>
     </div>
 
     <div class="row">
       <div class="row-title">Manufacturer</div>
-      <div>{{driver.manufacturer}}</div>
+      <div>{{vehicle.manufacturer}}</div>
     </div>
 
     <div class="row">
       <div class="row-title">Acquisition Date</div>
-      <div>{{driver.acquisitionDate}}</div>
+      <div>{{vehicle.acquisitionDate}}</div>
     </div>
 
     <div class="row">
       <div class="row-title">Odometer</div>
-      <div>{{driver.odometer}}km</div>
+      <div>{{vehicle.odometer}}km</div>
     </div>
 
     <div class="row">
       <div class="row-title">Has Insurance</div>
-      <div v-bind:class="{'red':!driver.hasInsurance}">{{driver.hasInsurance}}</div>
+      <div v-bind:class="{'red':!vehicle.hasInsurance}">{{vehicle.hasInsurance}}</div>
     </div>
 
     <div class="row">
       <div class="row-title">Next Inspection</div>
-      <div>{{driver.dateNextInspection}}</div>
+      <div>{{vehicle.dateNextInspection}}</div>
     </div>
 
     <div class="row">
-      <div class="row-title"># {{driver.id}}</div>
+      <div class="row-title"># {{vehicle.id}}</div>
     </div>
 
   </div>
@@ -47,8 +48,8 @@
   import Vue from 'vue';
 
   export default Vue.extend({
-    name: 'Driver',
-    props: ["driver"]
+    name: 'Vehicle',
+    props: ["vehicle"]
   });
 </script>
 

@@ -1,16 +1,19 @@
 <template>
   <section id="app">
     <h1>This is my app</h1>
-    <Drivers v-bind:drivers="drivers" />
+    <Filters v-on:add-filter="addFilter" :filters='filters' />
+    <Vehicles v-bind:vehicles="filteredVehicles" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { filter } from 'vue/types/umd';
 
-import Drivers from './components/Drivers.vue';
+import Filters from './components/Filters.vue';
+import Vehicles from './components/Vehicles.vue';
 
-type driverType = {
+type vehicleType = {
   id: number;
   driverName: string;
   licensePlate: string;
@@ -21,8 +24,8 @@ type driverType = {
   dateNextInspection: string;
 }
 
-let driversArr: driverType[] = [];
-let driverMan: driverType;
+let vehiclesArr: vehicleType[] = [];
+let newVehicle: vehicleType;
 
 
 // Mock Data
@@ -43,10 +46,9 @@ for  (let i = 0; i < 50; i++){
   let randomAcquisitionDate = randomDate(new Date(2008, 0, 1), new Date());
   let randomDateNextInspection = randomDate(new Date(), new Date(2022, 1, 1));
 
-
-  driverMan = {
+  newVehicle = {
     id: Vue.faker().random.uuid(),
-    driverName: Vue.faker().name.findName(),
+    driverName: ( Math.random() < 0.9 ? Vue.faker().name.findName() : '' ),//this will give a 10% chance of not returning a vehicle - so we get some vehicles without driver
     licensePlate: randomLicencePlate,
     manufacturer: Vue.faker().vehicle.manufacturer(),
     acquisitionDate: randomAcquisitionDate.toLocaleDateString('en-GB'),
@@ -55,20 +57,75 @@ for  (let i = 0; i < 50; i++){
     dateNextInspection: randomDateNextInspection.toLocaleDateString('en-GB')
   }
 
-  driversArr.push(driverMan);
-
+  vehiclesArr.push(newVehicle);
 }
 // end mock data ---------------------
 
+/*let filterProps = {
+  hasInsurance: 'all',
+  driverName: true,
+  odometer: 0
+};
+let vehiclesCount = 0;
+
+let filteredVehiclesArr = vehiclesArr.filter(function(item) {
+  for (var key in filterProps) {
+    if(
+        key == 'hasInsurance' && filterProps[key] != 'all' || 
+        key == 'driverName' && !filterProps[key]
+      ){
+      if (item[key] === undefined || item[key] != filterProps[key]) {
+        return false;
+      }
+    }
+    if(key == 'odometer'){
+      if (item[key] <= filterProps[key] * 1000) {
+        return false;
+      }
+    }
+  }
+  vehiclesCount++;
+  return true;
+});
+console.log('Currently showing ' + vehiclesCount + ' of 50 vehicles.');*/
 
 export default Vue.extend({
   name: 'App',
   components: {
-    Drivers
+    Filters,
+    Vehicles
   },
   data() {
     return {
-      drivers: driversArr
+      vehicles: vehiclesArr,
+      filteredVehicles: vehiclesArr,
+      filters: {
+          hasInsurance: 'all',
+          showNoDriverOnly: false,
+          minOdometer: -1
+      }
+    }
+  },
+  computed: {
+  },
+  methods: {
+  
+    addFilter(e:Event, other) {
+  
+      var fl:Object = this.filters;
+      for (var key in e) {
+        fl[key] = e[key]
+      }
+
+      this.filteredVehicles = this.vehicles.filter(function(item) {
+        if(fl.hasInsurance != 'all'){
+          if(fl.hasInsurance != item.hasInsurance) return false;
+        }
+        if(fl.showNoDriverOnly && (item.driverName.trim())) return false;
+        if(fl.minOdometer > item.odometer) return false;
+        return true
+      });
+      //this.filters
     }
   }
 });
@@ -92,7 +149,7 @@ export default Vue.extend({
     padding-top: 60px;
   }
 
-  .drivers {
+  .vehicles {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -100,7 +157,7 @@ export default Vue.extend({
     align-items: stretch;
     align-content: stretch;
   }
-  .driver {
+  .vehicle {
     background-color: #fafafa;
     border: 1px solid #eee;
     border-radius: 10px;
@@ -111,14 +168,14 @@ export default Vue.extend({
     flex-basis: 260px;
     align-self: auto;
   }
-  .driver .row {
+  .vehicle .row {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #eee;
     padding: 6px 15px;
 
     font-weight: bold;
   }
-  .driver .row-title {
+  .vehicle .row-title {
     font-size: 11px;
     padding-bottom: 8px;
     font-weight: normal;
