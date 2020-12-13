@@ -29,38 +29,67 @@ let vehiclesArr: vehicleType[] = [];
 let newVehicle: vehicleType;
 
 
-// Mock Data
+// Create vehiclesArr with Mock Data
 // ----------------------------------
 Vue.use(require('vue-faker'));
 
-for  (let i = 0; i < 50; i++){
+let getVehiclesArr = function(){
 
-  let randomLicencePlate = (Math.floor(Math.random() * (99 - 10 + 1)) + 10)
-                        + '-FC-'
-                        + (Math.floor(Math.random() * (99 - 10 + 1)) + 10); 
+  for  (let i = 0; i < 50; i++){
 
-  let randomOdometer = Math.floor(Math.random() * 500001);
+    let randomLicencePlate = (Math.floor(Math.random() * (99 - 10 + 1)) + 10)
+                          + '-FC-'
+                          + (Math.floor(Math.random() * (99 - 10 + 1)) + 10); 
 
-  function randomDate(start, end) {
-      return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    let randomOdometer = Math.floor(Math.random() * 500001);
+
+    function randomDate(start, end) {
+        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    }
+    let randomAcquisitionDate = randomDate(new Date(2008, 0, 1), new Date());
+    let randomDateNextInspection = randomDate(new Date(), new Date(2022, 1, 1));
+
+    newVehicle = {
+      id: Vue.faker().random.uuid(),
+      driverName: ( Math.random() < 0.9 ? Vue.faker().name.findName() : '' ),//this will give a 10% chance of not returning a vehicle - so we get some vehicles without driver
+      licensePlate: randomLicencePlate,
+      manufacturer: Vue.faker().vehicle.manufacturer(),
+      acquisitionDate: randomAcquisitionDate.toLocaleDateString('en-GB'),
+      odometer: randomOdometer,
+      hasInsurance: Vue.faker().random.boolean(),
+      dateNextInspection: randomDateNextInspection.toLocaleDateString('en-GB')
+    }
+
+    vehiclesArr.push(newVehicle);
   }
-  let randomAcquisitionDate = randomDate(new Date(2008, 0, 1), new Date());
-  let randomDateNextInspection = randomDate(new Date(), new Date(2022, 1, 1));
-
-  newVehicle = {
-    id: Vue.faker().random.uuid(),
-    driverName: ( Math.random() < 0.9 ? Vue.faker().name.findName() : '' ),//this will give a 10% chance of not returning a vehicle - so we get some vehicles without driver
-    licensePlate: randomLicencePlate,
-    manufacturer: Vue.faker().vehicle.manufacturer(),
-    acquisitionDate: randomAcquisitionDate.toLocaleDateString('en-GB'),
-    odometer: randomOdometer,
-    hasInsurance: Vue.faker().random.boolean(),
-    dateNextInspection: randomDateNextInspection.toLocaleDateString('en-GB')
-  }
-
-  vehiclesArr.push(newVehicle);
+  return vehiclesArr;
 }
 // end mock data ---------------------
+
+
+// sessionStorage --------------------
+let sessionExpiryTime = parseInt(sessionStorage.getItem('_vat'));
+
+// check if sessionExpiryTime exists && if it's less than 30 mins old
+if (sessionExpiryTime !== null && sessionExpiryTime > Date.now()) {
+
+  // get vehiclesArr from sessionStorage
+  vehiclesArr = JSON.parse(sessionStorage.getItem('_va'));
+}
+else {
+  // we don't have the required data in session,
+  // lets create the vehiclesArr from model/mock data
+  // and then set the sessionStorage
+  vehiclesArr = getVehiclesArr();
+  
+  // set sessionStorage
+  let minsToExpireSession: number = 30;
+
+  sessionStorage.setItem('_va', JSON.stringify(vehiclesArr));
+  sessionStorage.setItem('_vat', Date.now() + minsToExpireSession * 60000);
+}
+// end sessionStorage ------------------
+
 
 export default Vue.extend({
   name: 'App',
