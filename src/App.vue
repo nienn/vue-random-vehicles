@@ -9,6 +9,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { filter } from 'vue/types/umd';
+import _ from 'lodash';
 
 import Filters from './components/Filters.vue';
 import Vehicles from './components/Vehicles.vue';
@@ -85,9 +86,8 @@ export default Vue.extend({
     addFilter(e:Event, other) {
   
       var fl:Object = this.filters;
-      for (var key in e) {
-        fl[key] = e[key]
-      }
+
+      _.merge(fl, e);
 
       this.filteredVehicles = this.vehicles.filter(function(item) {
         if(fl.hasInsurance != 'all'){

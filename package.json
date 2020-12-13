@@ -10,6 +10,8 @@
     "@types/faker": "^5.1.5",
     "core-js": "^3.6.5",
     "dayjs": "^1.9.7",
+    "lodash": "^4.17.20",
+    "lodash.merge": "^4.6.2",
     "vue": "^2.6.11",
     "vue-faker": "^3.0.0"
   },
