@@ -1,6 +1,7 @@
 <template>
   <section id="app">
-    <h1>This is my app</h1>
+    <h1>Vehicles</h1>
+    <div class="top-note">Showing <b>{{filteredVehicles.length}}</b> of a total of <b>50</b> vehicles</div>
     <Filters v-on:add-filter="addFilter" :filters='filters' />
     <Vehicles v-bind:vehicles="filteredVehicles" />
   </section>
@@ -102,9 +103,9 @@ export default Vue.extend({
       vehicles: vehiclesArr,
       filteredVehicles: vehiclesArr,
       filters: {
-          hasInsurance: 'all',
+          showWithInsurance: 'all',
           showNoDriverOnly: false,
-          minOdometer: -1
+          showMinOdometer: -1
       }
     }
   },
@@ -119,11 +120,11 @@ export default Vue.extend({
       _.merge(fl, e);
 
       this.filteredVehicles = this.vehicles.filter(function(item) {
-        if(fl.hasInsurance != 'all'){
-          if(fl.hasInsurance != item.hasInsurance) return false;
+        if(fl.showWithInsurance != 'all'){
+          if(fl.showWithInsurance != item.hasInsurance) return false;
         }
         if(fl.showNoDriverOnly && (item.driverName.trim())) return false;
-        if(fl.minOdometer > item.odometer) return false;
+        if(fl.showMinOdometer > item.odometer) return false;
         return true
       });
       //this.filters
@@ -136,8 +137,8 @@ export default Vue.extend({
 
   $text-color: #333;
   $text-light: #666;
-  $primary-color: rgb(0, 124, 56);
   $red: rgb(219, 0, 48);
+  $primary-color: $red;
 
   html, body { margin: 0; padding: 0;}
 
@@ -147,7 +148,19 @@ export default Vue.extend({
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: $text-color;
-    padding-top: 60px;
+  }
+
+  h1 {
+    font-size: 40px;
+    margin:  60px 0 10px;
+  }
+  .top-note {
+    font-style:  italic;
+    color: #666;
+
+    b {
+      color: $text-color;
+    }
   }
 
   .vehicles {
@@ -184,5 +197,46 @@ export default Vue.extend({
   }
   .red {
     color: $red;
+  }
+
+
+  .filters {
+    margin: 40px 0 30px;
+  }
+  .btn-group {
+    padding: 6px 10px;
+    display: inline-block;
+  }
+  .btn {
+    background:linear-gradient(to bottom, #fff 0%, #f2f2f2 100%);
+    background-color:#fafafa;
+    border:1px solid #ddd;
+    display:inline-block;
+    cursor:pointer;
+    padding:8px 18px;
+    font-size: 13px;
+    text-decoration: none;
+    margin-right: -1px;
+  }
+  .btn:hover {
+    background:linear-gradient(to bottom, #f6f6f6 0%, #ffffff 100%);
+    background-color:#f6f6f6;
+  }
+  .btn:first-child {
+    border-radius: 3px 0 0 3px;
+  }
+  .btn:last-child {
+    border-radius: 0 3px 3px 0;
+  }
+
+
+  .btn.active {
+    background:linear-gradient(to bottom, $primary-color 0%, darken($primary-color, 7%) 100%);
+	  background-color:#f24537;
+	  border-color: darken(#f24537, 10%);
+    color: #fff;
+  }
+  .btn.inactive {
+    color: #bbb;
   }
 </style>
