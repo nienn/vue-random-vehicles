@@ -217,6 +217,7 @@ export default Vue.extend({
     font-size: 13px;
     text-decoration: none;
     margin-right: -1px;
+    user-select: none;
   }
   .btn:hover {
     background:linear-gradient(to bottom, #f6f6f6 0%, #ffffff 100%);
