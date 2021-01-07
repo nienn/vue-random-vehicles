@@ -52,7 +52,7 @@ let getVehiclesArr = function(){
 
     newVehicle = {
       id: Vue.faker().random.uuid(),
-      driverName: ( Math.random() < 0.9 ? Vue.faker().name.findName() : '' ),//this will give a 10% chance of not returning a vehicle - so we get some vehicles without driver
+      driverName: ( Math.random() < 0.9 ? Vue.faker().name.findName() : '' ),//this will give a 10% chance of not returning a driver - so we get some vehicles without driver
       licensePlate: randomLicencePlate,
       manufacturer: Vue.faker().vehicle.manufacturer(),
       acquisitionDate: randomAcquisitionDate.toLocaleDateString('en-GB'),
@@ -173,8 +173,10 @@ export default Vue.extend({
   }
   .vehicle {
     background-color: #fafafa;
+    background:linear-gradient(195deg,  #fafafa 0%, #fefefe 25%, #fafafa 100%);
     border: 1px solid #eee;
-    border-radius: 10px;
+    border-color: #eee #e4e4e4 #e4e4e4 #eee;
+    border-radius: 8px;
     margin:  15px;
 
     flex-grow: 0;
@@ -186,8 +188,9 @@ export default Vue.extend({
     border-top: 1px solid #fff;
     border-bottom: 1px solid #eee;
     padding: 6px 15px;
-
     font-weight: bold;
+    &:first-child { border-top: 0 }
+    &:last-child { border-bottom: 0 }
   }
   .vehicle .row-title {
     font-size: 11px;
