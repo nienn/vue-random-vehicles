@@ -1,6 +1,6 @@
 # A Vue Project
 
-A very simple vue project that displays a list of 50 random vehicle brands with stats and drivers.  
+A very simple vue project that displays a list of 50 random vehicles with stats and drivers.  
 Some features:
 
 - SCSS;
